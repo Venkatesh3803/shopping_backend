@@ -12,6 +12,23 @@ export const createOrder = async (req, res) => {
     }
 }
 
+// get single order
+export const getSingleOrder = async (req, res) => {
+    const id = req.params.id;
+    const post = await orderModel.findById(id)
+
+    try {
+        if (post) {
+            const currentOrder = await orderModel(post)
+            res.status(200).json(currentOrder)
+        } else {
+            res.status(404).json("Order not avaliable")
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+}
+
 
 // updateOrder
 export const UpdateOrder = async (req, res) => {

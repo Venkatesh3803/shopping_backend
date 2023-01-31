@@ -46,6 +46,11 @@ const orderSchema = new mongoose.Schema({
     paymentMethod: {
         type: String,
     },
+    status: {
+       type: String,
+       default: "Pending"
+    }
+    
 }, { timestamps: true }
 )
 
