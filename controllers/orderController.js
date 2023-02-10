@@ -34,10 +34,10 @@ export const getSingleOrder = async (req, res) => {
 export const UpdateOrder = async (req, res) => {
     const id = req.params.id
     const order = await orderModel.findById(id)
-    const { userId } = req.body;
+    const { currentUserId, currentUserIsAdmin } = req.body;
 
     try {
-        if (order.userId === userId || req.body.isAdmin) {
+        if (order.userId === currentUserId || currentUserIsAdmin) {
             const currentOrder = await orderModel.findByIdAndUpdate(id, req.body, { new: true })
             res.status(200).json(currentOrder)
         } else {
@@ -53,10 +53,10 @@ export const UpdateOrder = async (req, res) => {
 export const deleteOrder = async (req, res) => {
     const id = req.params.id
     const order = await orderModel.findById(id)
-    const { userId } = req.body;
+    const { currentUserId, currentUserIsAdmin } = req.body;
 
     try {
-        if (order.userId === userId || req.isAdmin) {
+        if (order.userId === currentUserId || currentUserIsAdmin) {
             await orderModel.findByIdAndDelete(id)
             res.status(200).json("deleted sucessfilly")
         } else {
